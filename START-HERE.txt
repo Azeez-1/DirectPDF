@@ -1,0 +1,14 @@
+DirectPDF for Windows 10/11 (64-bit)
+
+1. Clone this repository, or download and extract its ZIP.
+2. Double-click "Start DirectPDF.cmd".
+3. Select "Try the sample" or open your own PDF.
+
+The app and its .NET runtime are already included under app\win-x64.
+You do not need to install .NET, an SDK, a PDF tool, or download dependencies.
+Keep the complete app\win-x64 folder together.
+
+Internet access is needed to obtain the repository or updates, but not to run
+the app or edit your PDFs. Cloning does not automatically launch the app.
+
+Source code and developer build instructions are also included in this repository.

@@ -1,0 +1,151 @@
+<Window x:Class="DirectPDF.App.MainWindow"
+ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Title="DirectPDF" Width="1360" Height="900" MinWidth="1060" MinHeight="680"
+ FontFamily="Segoe UI" FontSize="13" Foreground="{StaticResource Ink}" Background="#F4F7F7"
+ WindowStartupLocation="CenterScreen" AllowDrop="True" DragOver="Window_DragOver" Drop="Window_Drop"
+ Closing="Window_Closing" PreviewKeyDown="Window_PreviewKeyDown">
+  <Grid>
+    <Grid.RowDefinitions><RowDefinition Height="70" /><RowDefinition Height="*" /><RowDefinition Height="32" /></Grid.RowDefinitions>
+    <Border Grid.Row="0" Background="White" BorderBrush="{StaticResource Line}" BorderThickness="0,0,0,1">
+      <Grid Margin="24,0">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+          <Border Width="34" Height="38" Background="{StaticResource Accent}" CornerRadius="6" Margin="0,0,11,0">
+            <TextBlock Text="D" Foreground="White" FontSize="23" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+          <TextBlock Text="DirectPDF" FontSize="21" FontWeight="SemiBold" VerticalAlignment="Center" />
+          <Border Background="#EEF3F3" CornerRadius="4" Margin="12,0,0,0" Padding="7,3" VerticalAlignment="Center"><TextBlock Text="PREVIEW 0.1.1" FontSize="10" Foreground="{StaticResource Muted}" /></Border>
+        </StackPanel>
+        <TextBlock x:Name="FileLabel" Grid.Column="1" Text="Your documents, on your device." Foreground="{StaticResource Muted}" VerticalAlignment="Center" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" Margin="28,0" />
+        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+          <Button x:Name="OpenButton" Content="Open PDF" Click="Open_Click" ToolTip="Open a PDF (Ctrl+O)" Margin="0,0,8,0" />
+          <Button x:Name="SaveButton" Content="Save a copy" Click="Save_Click" Style="{StaticResource PrimaryButton}" IsEnabled="False" ToolTip="Save to a new filename (Ctrl+Shift+S)" />
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <Grid Grid.Row="1" x:Name="WelcomePanel">
+      <StackPanel MaxWidth="660" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40">
+        <TextBlock Text="PDF TEXT EDITOR" Foreground="{StaticResource Accent}" FontSize="12" FontWeight="Bold" Margin="0,0,0,18" />
+        <TextBlock Text="Make the change.&#x0a;Keep the PDF." FontSize="48" FontWeight="SemiBold" LineHeight="57" Margin="0,0,0,22" />
+        <TextBlock Text="Edit existing text directly, preview the result, and save a fresh copy. Your files stay on this computer." FontSize="17" Foreground="{StaticResource Muted}" TextWrapping="Wrap" LineHeight="26" Margin="0,0,0,30" />
+        <StackPanel Orientation="Horizontal">
+          <Button Content="Open a PDF" Click="Open_Click" Style="{StaticResource PrimaryButton}" Padding="24,13" FontSize="15" Margin="0,0,12,0" />
+          <Button Content="Try the sample" Click="Sample_Click" Padding="24,13" FontSize="15" />
+        </StackPanel>
+        <TextBlock Text="You can also drop a PDF anywhere in this window." Foreground="{StaticResource Muted}" Margin="0,15,0,38" />
+        <Border Background="White" BorderBrush="{StaticResource Line}" BorderThickness="1" CornerRadius="10" Padding="22">
+          <StackPanel>
+            <TextBlock Text="A focused first version" FontWeight="SemiBold" FontSize="15" Margin="0,0,0,8" />
+            <TextBlock Text="Best for text in digitally created PDFs. Edits automatically use the original font and styling, and can extend into available space. Scanned pages are view-only." Foreground="{StaticResource Muted}" TextWrapping="Wrap" LineHeight="21" />
+          </StackPanel>
+        </Border>
+      </StackPanel>
+    </Grid>
+
+    <Grid Grid.Row="1" x:Name="EditorPanel" Visibility="Collapsed">
+      <Grid.ColumnDefinitions><ColumnDefinition Width="210" /><ColumnDefinition Width="*" /><ColumnDefinition Width="304" /></Grid.ColumnDefinitions>
+      <Border Grid.Column="0" Background="#FAFCFC" BorderBrush="{StaticResource Line}" BorderThickness="0,0,1,0">
+        <DockPanel Margin="14,20,14,12">
+          <StackPanel DockPanel.Dock="Top">
+            <TextBlock Text="DOCUMENT" FontSize="11" FontWeight="Bold" Foreground="{StaticResource Muted}" Margin="4,0,0,12" />
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,18">
+              <Button x:Name="PreviousButton" Content="‹" Click="Previous_Click" Padding="13,4" FontSize="22" ToolTip="Previous page" />
+              <TextBlock x:Name="PageLabel" Text="1 / 1" Width="94" TextAlignment="Center" VerticalAlignment="Center" />
+              <Button x:Name="NextButton" Content="›" Click="Next_Click" Padding="13,4" FontSize="22" ToolTip="Next page" />
+            </StackPanel>
+            <TextBlock Text="TEXT ON THIS PAGE" FontSize="11" FontWeight="Bold" Foreground="{StaticResource Muted}" Margin="4,0,0,10" />
+          </StackPanel>
+          <TextBlock x:Name="SegmentCount" DockPanel.Dock="Bottom" Foreground="{StaticResource Muted}" FontSize="11" TextWrapping="Wrap" Margin="4,12,4,0" />
+          <ListBox x:Name="SegmentsList" BorderThickness="0" Background="Transparent" SelectionChanged="Segments_SelectionChanged"
+                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" AutomationProperties.Name="Text segments on the current page">
+            <ListBox.ItemContainerStyle><Style TargetType="ListBoxItem"><Setter Property="Padding" Value="9,10" /><Setter Property="Margin" Value="0,0,0,5" /><Setter Property="HorizontalContentAlignment" Value="Stretch" /></Style></ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate><DataTemplate>
+              <StackPanel>
+                <TextBlock Text="{Binding Text}" TextTrimming="CharacterEllipsis" FontSize="12" />
+                <TextBlock Text="{Binding Font}" TextTrimming="CharacterEllipsis" FontSize="10" Foreground="{StaticResource Muted}" Margin="0,4,0,0" />
+              </StackPanel>
+            </DataTemplate></ListBox.ItemTemplate>
+          </ListBox>
+        </DockPanel>
+      </Border>
+
+      <Grid Grid.Column="1">
+        <Grid.RowDefinitions><RowDefinition Height="54" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+        <Border Background="#FAFCFC" BorderBrush="{StaticResource Line}" BorderThickness="0,0,0,1">
+          <Grid Margin="15,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+              <Button x:Name="UndoButton" Content="Undo" Click="Undo_Click" Padding="10,6" Margin="0,0,6,0" ToolTip="Undo text edit (Ctrl+Z)" />
+              <Button x:Name="RedoButton" Content="Redo" Click="Redo_Click" Padding="10,6" ToolTip="Redo text edit (Ctrl+Y)" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+              <Button x:Name="ZoomOutButton" Content="−" Click="ZoomOut_Click" Padding="10,5" ToolTip="Zoom out" />
+              <TextBlock x:Name="ZoomLabel" Text="100%" Width="56" TextAlignment="Center" VerticalAlignment="Center" />
+              <Button x:Name="ZoomInButton" Content="+" Click="ZoomIn_Click" Padding="10,5" ToolTip="Zoom in" />
+            </StackPanel>
+          </Grid>
+        </Border>
+        <Border x:Name="PreviewBanner" Grid.Row="1" Background="#E3F2EB" Padding="16,10" Visibility="Collapsed">
+          <TextBlock Text="Preview — review the page, then apply or cancel the change." Foreground="#176B5B" TextWrapping="Wrap" FontSize="12" />
+        </Border>
+        <ScrollViewer x:Name="PageScroll" Grid.Row="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#E9EFEF">
+          <Border Margin="24" HorizontalAlignment="Center" VerticalAlignment="Top" Background="White">
+            <Border.Effect><DropShadowEffect BlurRadius="16" ShadowDepth="2" Opacity="0.12" /></Border.Effect>
+            <Grid x:Name="PageSurface">
+              <Image x:Name="PageImage" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" />
+              <Canvas x:Name="SelectionCanvas" Background="Transparent" />
+            </Grid>
+          </Border>
+        </ScrollViewer>
+      </Grid>
+
+      <Border Grid.Column="2" Background="White" BorderBrush="{StaticResource Line}" BorderThickness="1,0,0,0">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel Margin="22,22,22,18">
+            <TextBlock Text="Edit text" FontSize="22" FontWeight="SemiBold" Margin="0,0,0,8" />
+            <TextBlock Text="Select text on the page or in the list to get started." Foreground="{StaticResource Muted}" TextWrapping="Wrap" LineHeight="20" Margin="0,0,0,25" />
+            <TextBlock Text="ORIGINAL TEXT" FontSize="10" FontWeight="Bold" Foreground="{StaticResource Muted}" Margin="0,0,0,8" />
+            <Border Background="#F4F7F7" CornerRadius="6" Padding="12" MinHeight="68">
+              <TextBlock x:Name="OriginalText" Text="No text selected" TextWrapping="Wrap" LineHeight="21" />
+            </Border>
+            <TextBlock x:Name="FontLabel" Text="" Foreground="{StaticResource Muted}" FontSize="11" Margin="0,10,0,22" TextWrapping="Wrap" />
+            <Label Content="REPLACEMENT" Target="{Binding ElementName=ReplacementBox}" Padding="0" FontSize="10" FontWeight="Bold" Foreground="{StaticResource Muted}" Margin="0,0,0,8" />
+            <TextBox x:Name="ReplacementBox" MinHeight="88" TextWrapping="Wrap" AcceptsReturn="False" MaxLength="2000" VerticalContentAlignment="Top" TextChanged="Replacement_TextChanged" IsEnabled="False" AutomationProperties.Name="Replacement text" />
+            <TextBlock x:Name="TypographyHint" Text="The selected text's font, size, and style are applied automatically." FontSize="11" Foreground="{StaticResource Muted}" TextWrapping="Wrap" LineHeight="17" Margin="0,9,0,8" />
+            <TextBlock Text="Text can use nearby empty space. Leave this empty to remove the selected text." FontSize="11" Foreground="{StaticResource Muted}" TextWrapping="Wrap" LineHeight="17" Margin="0,0,0,17" />
+            <Button x:Name="PreviewButton" Content="Preview change" Style="{StaticResource PrimaryButton}" Click="Preview_Click" IsEnabled="False" Padding="14,12" />
+            <Grid Margin="0,9,0,0">
+              <Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions>
+              <Button x:Name="ApplyButton" Content="Apply" Click="Apply_Click" IsEnabled="False" Margin="0,0,5,0" />
+              <Button x:Name="CancelButton" Content="Cancel" Click="Cancel_Click" IsEnabled="False" Grid.Column="1" Margin="5,0,0,0" />
+            </Grid>
+            <Border x:Name="MessageBorder" Background="#F0F5F4" CornerRadius="6" Padding="12" Margin="0,22,0,0">
+              <TextBlock x:Name="EditorMessage" Text="Changes are checked before they can be applied." Foreground="{StaticResource Muted}" TextWrapping="Wrap" LineHeight="19" FontSize="12" />
+            </Border>
+            <Border BorderBrush="{StaticResource Line}" BorderThickness="0,1,0,0" Margin="0,26,0,0" Padding="0,18,0,0">
+              <StackPanel>
+                <TextBlock Text="Your file stays local" FontWeight="SemiBold" FontSize="12" />
+                <TextBlock Text="Opening, editing, and saving all work offline. Save a copy to keep your original intact." Foreground="{StaticResource Muted}" TextWrapping="Wrap" LineHeight="18" FontSize="11" Margin="0,7,0,0" />
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </ScrollViewer>
+      </Border>
+    </Grid>
+
+    <Border Grid.Row="2" Background="White" BorderBrush="{StaticResource Line}" BorderThickness="0,1,0,0">
+      <DockPanel Margin="20,0">
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+          <Ellipse Fill="{StaticResource Accent}" Width="6" Height="6" Margin="0,0,7,0" /><TextBlock Text="Offline · files stay on this device" FontSize="11" Foreground="{StaticResource Muted}" />
+        </StackPanel>
+        <TextBlock x:Name="StatusLabel" Text="Ready" FontSize="11" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+      </DockPanel>
+    </Border>
+    <Border x:Name="BusyOverlay" Grid.RowSpan="3" Background="#B8F4F7F7" Visibility="Collapsed">
+      <Border Background="White" CornerRadius="12" Padding="32" HorizontalAlignment="Center" VerticalAlignment="Center" Width="390" BorderBrush="{StaticResource Line}" BorderThickness="1">
+        <StackPanel><TextBlock x:Name="BusyLabel" Text="Opening PDF…" FontSize="17" FontWeight="SemiBold" TextWrapping="Wrap" /><ProgressBar IsIndeterminate="True" Height="4" Margin="0,20,0,0" Foreground="{StaticResource Accent}" /></StackPanel>
+      </Border>
+    </Border>
+  </Grid>
+</Window>

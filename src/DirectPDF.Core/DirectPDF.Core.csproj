@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="bblanchon.PDFium.Win32" Version="158.0.8111" />
+    <InternalsVisibleTo Include="DirectPDF.Tests" />
+  </ItemGroup>
+</Project>

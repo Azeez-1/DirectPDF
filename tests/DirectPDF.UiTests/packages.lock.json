@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net10.0-windows7.0": {
+      "bblanchon.PDFium.Win32": {
+        "type": "Transitive",
+        "resolved": "158.0.8111",
+        "contentHash": "+e5VgLjNYxSr31l7nOyo9qchHjIpD+F8IjZztGe5oaXjmy7KBw9yoal/UtoQR5JD69pfGyf9VXp1jgZZxD7Nbg=="
+      },
+      "DirectPDF": {
+        "type": "Project",
+        "dependencies": {
+          "DirectPDF.Core": "[1.0.0, )"
+        }
+      },
+      "directpdf.core": {
+        "type": "Project",
+        "dependencies": {
+          "bblanchon.PDFium.Win32": "[158.0.8111, )"
+        }
+      }
+    },
+    "net10.0-windows7.0/win-x64": {
+      "bblanchon.PDFium.Win32": {
+        "type": "Transitive",
+        "resolved": "158.0.8111",
+        "contentHash": "+e5VgLjNYxSr31l7nOyo9qchHjIpD+F8IjZztGe5oaXjmy7KBw9yoal/UtoQR5JD69pfGyf9VXp1jgZZxD7Nbg=="
+      }
+    }
+  }
+}

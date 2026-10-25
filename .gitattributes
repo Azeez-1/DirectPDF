@@ -1,0 +1,8 @@
+* text=auto
+*.cmd text eol=crlf
+*.pdf -text
+*.dll -text
+*.exe -text
+*.pdb -text
+# Preserve the exact bundled distribution, including its manifests and licenses.
+app/win-x64/** -text

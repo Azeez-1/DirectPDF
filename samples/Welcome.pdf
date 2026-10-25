@@ -1,0 +1,66 @@
+%PDF-1.7
+% DirectPDF test fixture
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 7 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+6 0 obj
+<< /Length 1295 >>
+stream
+q 0.06 0.35 0.32 rg 0 750 612 42 re f Q
+BT /F2 10 Tf 1 1 1 rg 1 0 0 1 48 766 Tm (DIRECTPDF / SAMPLE DOCUMENT) Tj ET
+BT /F2 26 Tf 0.08 0.16 0.22 rg 1 0 0 1 48 690 Tm (A small change. The same PDF.) Tj ET
+BT /F1 13 Tf 0.15 0.22 0.28 rg 1 0 0 1 48 658 Tm (Click a line of text to try your first edit.) Tj ET
+q 0.94 0.96 0.96 rg 48 430 516 180 re f Q
+BT /F2 10 Tf 0.06 0.35 0.32 rg 1 0 0 1 68 582 Tm (PROJECT DETAILS) Tj ET
+BT /F1 17 Tf 0.15 0.22 0.28 rg 1 0 0 1 68 543 Tm (Project: The October newsletter) Tj ET
+BT /F1 17 Tf 0.15 0.22 0.28 rg 1 0 0 1 68 506 Tm (Status: Waiting for final review) Tj ET
+BT /F1 17 Tf 0.15 0.22 0.28 rg 1 0 0 1 68 469 Tm (Reference: 2026-12345) Tj ET
+BT /F2 10 Tf 0.06 0.35 0.32 rg 1 0 0 1 48 375 Tm (TRY THIS) Tj ET
+BT /F1 13 Tf 0.15 0.22 0.28 rg 1 0 0 1 48 347 Tm (Change the status to: Status: Ready) Tj ET
+BT /F1 13 Tf 0.15 0.22 0.28 rg 1 0 0 1 48 322 Tm (Preview the result, apply it, then save an edited copy.) Tj ET
+BT /F1 12 Tf 0.15 0.22 0.28 rg 1 0 0 1 48 253 Tm (Edits keep the original font, size, colour, and baseline.) Tj ET
+BT /F1 12 Tf 0.15 0.22 0.28 rg 1 0 0 1 48 230 Tm (Use shorter text when a replacement would not fit.) Tj ET
+BT /F1 10 Tf 0.15 0.22 0.28 rg 1 0 0 1 48 55 Tm (This sample was created for DirectPDF. All editing works offline.) Tj ET
+
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 304 >>
+stream
+BT /F2 24 Tf 0.15 0.22 0.28 rg 1 0 0 1 48 690 Tm (A second page, preserved.) Tj ET
+BT /F1 14 Tf 0.15 0.22 0.28 rg 1 0 0 1 48 645 Tm (Changes on the first page leave this page intact.) Tj ET
+BT /F1 13 Tf 0.15 0.22 0.28 rg 1 0 0 1 48 612 Tm (DirectPDF validates every page before accepting an edit.) Tj ET
+
+endstream
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000034 00000 n 
+0000000083 00000 n 
+0000000146 00000 n 
+0000000282 00000 n 
+0000000379 00000 n 
+0000000481 00000 n 
+0000001828 00000 n 
+0000001964 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R >>
+startxref
+2319
+%%EOF

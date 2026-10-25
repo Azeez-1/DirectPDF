@@ -1,0 +1,11 @@
+.tools/
+.nuget/
+.dotnet-home/
+**/bin/
+**/obj/
+artifacts/
+.vs/
+*.user
+*.suo
+*.tmp
+

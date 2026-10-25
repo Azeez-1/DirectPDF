@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DirectPDF.Core/DirectPDF.Core.csproj" />
+    <Project Path="src/DirectPDF.App/DirectPDF.App.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DirectPDF.Tests/DirectPDF.Tests.csproj" />
+    <Project Path="tests/DirectPDF.UiTests/DirectPDF.UiTests.csproj" />
+  </Folder>
+</Solution>
