@@ -5,7 +5,7 @@ try {
     $mode = if ($SelfContained) { 'self-contained' } else { 'framework-dependent' }
     $output = if ($OutputDirectory) { [IO.Path]::GetFullPath((Join-Path $RepoRoot $OutputDirectory)) } else { Join-Path $RepoRoot "artifacts\DirectPDF-win-x64-$mode" }
     $contained = if ($SelfContained) { 'true' } else { 'false' }
-    Invoke-Dotnet publish src/DirectPDF.App -c Release -r win-x64 --self-contained $contained -o $output -p:PublishSingleFile=false -p:PublishTrimmed=false -p:RestoreLockedMode=true
+    Invoke-Dotnet publish src/DirectPDF.App -c Release -r win-x64 --self-contained $contained -o $output '-p:PublishSingleFile=false' '-p:PublishTrimmed=false' '-p:RestoreLockedMode=true'
     if ($SelfContained) {
         $runtimeConfig = Get-Content -LiteralPath (Join-Path $output 'DirectPDF.runtimeconfig.json') -Raw | ConvertFrom-Json
         foreach ($framework in $runtimeConfig.runtimeOptions.includedFrameworks) {
